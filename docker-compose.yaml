@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  testing:
+    build: .
+    env_file:
+      - ./secrets.env  # Load secrets like API keys, etc.
+    ports:
+      - "5000:5000"  # Map container port 5000 to host
+    volumes:
+      - .:/app  # Mount the local directory inside the container for live code updates
+    environment:
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright  # Optional, for browser path control
+    restart: always  # Restart on failure

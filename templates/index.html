@@ -47,16 +47,8 @@
                 <tbody>
                     {% for post in data %}
                         <tr>
-                            <td>{{ post['Author'] }}</td>
                             <td>{{ post['Content'] }}</td>
                             <td>{{ post['Hashtags'] }}</td>
-                            <td>
-                                {% if post['Image URL'] != "No Image Available" %}
-                                    <img  alt=""   src="{{ post['Image URL'] }}" width="100" height="100">
-                                {% else %}
-                                    No Image
-                                {% endif %}
-                            </td>
                             <td><a href="{{ post['Post URL'] }}" target="_blank">View Post</a></td>
                         </tr>
                     {% endfor %}
