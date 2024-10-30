@@ -2,16 +2,23 @@ import csv
 import re
 from playwright.sync_api import sync_playwright
 
+import os
+
+
 def scrape_linkedin(query, num_posts=10):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  # Set to False to see the browser
+        try:
+            browser = p.chromium.launch(headless=True)
+        except Exception as e:
+            print(f"Browser launch failed: {e}")
+            return []
         page = browser.new_page()
         page.set_viewport_size({"width": 1280, "height": 720})
 
         # Log in to LinkedIn
         page.goto('https://www.linkedin.com/login')
-        page.fill('#username', '2000331530035@rkgit.edu.in')  # Replace with your credentials
-        page.fill('#password', 'Roy@1234')  # Replace with your password
+        page.fill('#username', os.getenv('LINKEDIN_USERNAME'))
+        page.fill('#password', os.getenv('LINKEDIN_PASSWORD'))
         page.click('button[type="submit"]')
         page.wait_for_timeout(5000)  # Wait for login to complete
 

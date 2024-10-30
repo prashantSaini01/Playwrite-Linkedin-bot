@@ -1,13 +1,14 @@
-version: '3.9'
+version: '3.8'
+
 services:
-  testing:
+  web:
     build: .
-    env_file:
-      - ./secrets.env  # Load secrets like API keys, etc.
     ports:
-      - "5000:5000"  # Map container port 5000 to host
+      - "5000:5000"
     volumes:
-      - .:/app  # Mount the local directory inside the container for live code updates
+      - ./data:/app/data
     environment:
-      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright  # Optional, for browser path control
-    restart: always  # Restart on failure
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+    command: python3 app.py
+    shm_size: '2gb'  # Increased shared memory for browser st

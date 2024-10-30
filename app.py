@@ -3,7 +3,7 @@ from scrapper import scrape_linkedin, save_to_csv
 import os
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'supersecretkey')
 scraped_data = []  # Store scraped data in memory
 
 @app.route('/', methods=['GET', 'POST'])
@@ -34,4 +34,11 @@ def download():
         return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+
+
+
+
+
+
